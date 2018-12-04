@@ -1,12 +1,29 @@
 {% extends 'polls/base.html' %}
 
 {% block content %}
-{% if latest_question_list %}
-	<ul>
-		{% for  question in latest_question_list %}
-			<li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-		{% endfor %}
-	</ul>
+{% if questions %}
+	{% for question in questions %}
+	    {# Each "contact" is a Contact model object. #}
+	    <a href="{% url 'polls:detail' question.id %}">{{ question.question_text|upper }}</a><br>
+	{% endfor %}
+
+	<div class="pagination">
+	    <span class="step-links">
+	        {% if questions.has_previous %}
+	            <a href="?page=1">&laquo; first</a>
+	            <a href="?page={{ questions.previous_page_number }}">previous</a>
+	        {% endif %}
+
+	        <span class="current">
+	            Page {{ questions.number }} of {{ questions.paginator.num_pages }}.
+	        </span>
+
+	        {% if questions.has_next %}
+	            <a href="?page={{ questions.next_page_number }}">next</a>
+	            <a href="?page={{ questions.paginator.num_pages }}">last &raquo;</a>
+	        {% endif %}
+	    </span>
+	</div>
 {% else %}
 	<p>No polls are available.</p>
 

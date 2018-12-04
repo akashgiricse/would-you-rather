@@ -12,8 +12,11 @@ def home(request):
 
 
 def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
+    latest_question_list = Question.objects.order_by('-pub_date')
+    paginator = Paginator(latest_question_list, 1)
+    page = request.GET.get('page')
+    questions = paginator.get_page(page)
+    context = {'questions': questions}
     return render(request, 'polls/index.html', context)
 
 # class IndexView(generic.ListView):
