@@ -2,8 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, Http404
 from .models import Question, Choice
 from django.urls import reverse
-from django.views import generic
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 
 # Create your views here.
 
